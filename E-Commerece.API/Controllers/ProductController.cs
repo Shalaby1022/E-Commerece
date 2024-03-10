@@ -49,7 +49,7 @@ namespace E_Commerece.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                return Ok(products);
+                return Ok(mappedProducts);
             } 
             catch (Exception ex)
             {
@@ -69,7 +69,9 @@ namespace E_Commerece.API.Controllers
             {
                 if (PrdouctId == null) return BadRequest("CommentId can't be NUll Value");
 
-                var product = await _productRepository.GetProductByIdAsync(PrdouctId);
+                var spec = new ProductWithTypesAndBrandxsSpecification(PrdouctId);
+
+                var product = await _productGenericRepository.GetWithSpecificationAsync(spec);
 
                 if (product == null)
                     return NotFound($"Product with Id {PrdouctId} not found");
@@ -80,7 +82,7 @@ namespace E_Commerece.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                return Ok(mappedProduct);
+                return Ok(product);
 
             }
             catch (Exception ex)
