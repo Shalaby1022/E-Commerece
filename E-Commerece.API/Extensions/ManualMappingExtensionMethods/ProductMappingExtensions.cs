@@ -12,7 +12,9 @@ namespace E_Commerece.API.Extensions.ManualMappingExtensionMethods
                 Name = product.Name,
                 Price = product.Price,  
                 Description = product.Description,
-                
+                PictureUrl = product.PictureUrl,
+                ProductType = product.productType,
+                ProductBrand = product.ProductBrand,
             };
 
         }

@@ -1,4 +1,5 @@
 using Core.Interfaces;
+using E_Commerece.API.ExceptionsConfiguration;
 using InfraStructure.Data;
 using InfraStructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -69,12 +70,20 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
+
+
+//app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
 app.UseHttpsRedirection();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.AddGlobalErrorHandlingMiddlewares();
 
 app.Run();

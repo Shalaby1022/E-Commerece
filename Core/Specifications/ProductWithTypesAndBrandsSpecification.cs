@@ -17,11 +17,15 @@ namespace Core.Specifications
             AddInclude(y => y.ProductBrand);
 
         }
-        public ProductWithTypesAndBrandxsSpecification(string sort)
+        public ProductWithTypesAndBrandxsSpecification(string sort, int? typeId, int? brandId)
+            : base(x =>
+                (!typeId.HasValue || x.ProductTypeId == typeId) &&
+                (!brandId.HasValue || x.ProductBrandId == brandId))
         {
-                AddInclude(x => x.productType);
-                AddInclude(y => y.ProductBrand);
-                AddOrderByAsc(x => x.Name);
+
+                 AddInclude(x => x.productType);
+                 AddInclude(y => y.ProductBrand);
+                 AddOrderByAsc(x => x.Name);
 
 
             if (!string.IsNullOrEmpty(sort))

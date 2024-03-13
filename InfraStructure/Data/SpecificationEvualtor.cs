@@ -20,6 +20,17 @@ namespace InfraStructure.Data
                 query = query.Where(specification.Expression);
             }
 
+            if (specification.OrderByAscending != null)
+            {
+                query = query.OrderBy(specification.OrderByAscending);
+            }
+
+            if (specification.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(specification.OrderByDescending);
+            }
+
+
             query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
 
             return query;

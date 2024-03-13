@@ -5,6 +5,7 @@ using Core.Models;
 using System.ComponentModel.Design;
 using E_Commerece.API.DTOs.Product;
 using Core.Specifications;
+using E_Commerece.API.ResourcceParameters;
 
 
 namespace E_Commerece.API.Controllers
@@ -32,12 +33,14 @@ namespace E_Commerece.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetProducts(string sort)
+        public async Task<IActionResult> GetProducts( [FromQuery] ProductResourceParameters resourceParameters)
         {
             try
             {
 
-                var spec = new ProductWithTypesAndBrandxsSpecification(sort);
+                var spec = new ProductWithTypesAndBrandxsSpecification(resourceParameters.sort 
+                                                                     , resourceParameters.TypeId
+                                                                     , resourceParameters.BrandId);
 
                 var products = await _productGenericRepository.GetAllWithSpecificationAsync(spec);
 
