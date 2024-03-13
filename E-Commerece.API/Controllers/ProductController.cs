@@ -32,12 +32,12 @@ namespace E_Commerece.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts(string sort)
         {
             try
             {
 
-                var spec = new ProductWithTypesAndBrandxsSpecification();
+                var spec = new ProductWithTypesAndBrandxsSpecification(sort);
 
                 var products = await _productGenericRepository.GetAllWithSpecificationAsync(spec);
 
@@ -82,7 +82,7 @@ namespace E_Commerece.API.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                return Ok(product);
+                return Ok(mappedProduct);
 
             }
             catch (Exception ex)

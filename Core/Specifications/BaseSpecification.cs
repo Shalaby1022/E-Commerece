@@ -24,9 +24,24 @@ namespace Core.Specifications
 
         public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
 
+        public Expression<Func<T, object>> OrderByAscending {get; private set;}
+
+        public Expression<Func<T, object>> OrderByDescending { get; private set;}
+
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
+        }
+
+        protected void AddOrderByAsc(Expression<Func<T, object>> orderByExpression)
+        {
+            OrderByAscending = orderByExpression;
+                
+        }
+
+        protected void AddOrderByDesc(Expression<Func<T, object>> orderByDescExpression)
+        {
+            OrderByDescending = orderByDescExpression;
         }
 
     }

@@ -23,7 +23,7 @@ namespace E_Commerece.API.Controllers
             var anyThingAssumeProduct = _context.Products.Find(80);
             if(anyThingAssumeProduct == null)
             {
-                throw new NotFoundException("Testing Not Found");   
+                throw new  NotFoundException("Testing Not Found");   
             }
 
             return Ok();
@@ -38,7 +38,7 @@ namespace E_Commerece.API.Controllers
                 var anythingToString = anyThingAssumeProduct.ToString();
             }
 
-            return (500 , new API.ExceptionsConfiguration.Errors.ApiExceptions(500));
+            return StatusCode(500 , new API.ExceptionsConfiguration.Errors.ApiExceptions(500));
         }
 
         [HttpGet("badRquest")]

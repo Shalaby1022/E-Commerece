@@ -15,11 +15,32 @@ namespace Core.Specifications
         {
             AddInclude(x => x.productType);
             AddInclude(y => y.ProductBrand);
+
         }
-        public ProductWithTypesAndBrandxsSpecification()
+        public ProductWithTypesAndBrandxsSpecification(string sort)
         {
                 AddInclude(x => x.productType);
                 AddInclude(y => y.ProductBrand);
+                AddOrderByAsc(x => x.Name);
+
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                switch (sort)
+                {
+                    case "PriceAsc":
+                        AddOrderByAsc(p => p.Price);
+                        break;
+
+                    case "priceDesc":
+                        AddOrderByDesc(p => p.Price);
+                        break;
+
+                    case "Name":
+                        AddOrderByAsc(n => n.Name);
+                        break;
+                }
+            }
         }
     }
 }
