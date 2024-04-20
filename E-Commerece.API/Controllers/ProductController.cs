@@ -38,9 +38,7 @@ namespace E_Commerece.API.Controllers
             try
             {
 
-                var spec = new ProductWithTypesAndBrandxsSpecification(resourceParameters.sort 
-                                                                     , resourceParameters.TypeId
-                                                                     , resourceParameters.BrandId);
+                var spec = new ProductWithTypesAndBrandxsSpecification(resourceParameters);
 
                 var products = await _productGenericRepository.GetAllWithSpecificationAsync(spec);
 

@@ -27,5 +27,8 @@ namespace Core.Interfaces
         void DeleteRange(IEnumerable<T> entities);
 
 
+        Task<int> CountAsync(ISpecification<T> specification);
+
+
     }
 }

@@ -102,9 +102,16 @@ namespace InfraStructure.Repository
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
+
+        public async Task<int> CountAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).CountAsync();
+        }
         private IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return SpecificationEvualtor<T>.GetQuery(_dbSet.AsQueryable(),specification);
         }
+
+
     }
 }
