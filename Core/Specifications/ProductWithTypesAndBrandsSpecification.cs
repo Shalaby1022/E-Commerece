@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using E_Commerece.API.ResourcceParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,32 +18,40 @@ namespace Core.Specifications
             AddInclude(y => y.ProductBrand);
 
         }
-        public ProductWithTypesAndBrandxsSpecification(string sort, int? typeId, int? brandId)
+        public ProductWithTypesAndBrandxsSpecification(ProductResourceParameters productResourceParameters)
             : base(x =>
-                (!typeId.HasValue || x.ProductTypeId == typeId) &&
-                (!brandId.HasValue || x.ProductBrandId == brandId))
+                (string.IsNullOrEmpty(productResourceParameters.Seacrh) || x.Name.ToLower().Contains(productResourceParameters.Seacrh)) &&
+                (!productResourceParameters.TypeId.HasValue || x.ProductTypeId == productResourceParameters.TypeId) &&
+                (!productResourceParameters.BrandId.HasValue || x.ProductBrandId == productResourceParameters.BrandId))
         {
 
                  AddInclude(x => x.productType);
                  AddInclude(y => y.ProductBrand);
                  AddOrderByAsc(x => x.Name);
+                 ApplyPagination(productResourceParameters.PageSize * (productResourceParameters.PageIndex - 1) , productResourceParameters.PageSize);
 
 
-            if (!string.IsNullOrEmpty(sort))
+
+            if(!string.IsNullOrEmpty(productResourceParameters.Sort))
             {
-                switch (sort)
+                switch (productResourceParameters.Sort)
                 {
                     case "PriceAsc":
                         AddOrderByAsc(p => p.Price);
                         break;
 
-                    case "priceDesc":
+                    case "PriceDesc":
                         AddOrderByDesc(p => p.Price);
                         break;
 
-                    case "Name":
-                        AddOrderByAsc(n => n.Name);
+                    case "NameAsc":
+                        AddOrderByAsc(p => p.Name);
                         break;
+
+                    case "NameDesc":
+                        AddOrderByDesc(p => p.Name);
+                        break;
+
                 }
             }
         }
