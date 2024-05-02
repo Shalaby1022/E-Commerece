@@ -6,6 +6,7 @@ using System.ComponentModel.Design;
 using E_Commerece.API.DTOs.Product;
 using Core.Specifications;
 using E_Commerece.API.ResourcceParameters;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace E_Commerece.API.Controllers
@@ -29,10 +30,13 @@ namespace E_Commerece.API.Controllers
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Product>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+        [Authorize]
         public async Task<IActionResult> GetProducts( [FromQuery] ProductResourceParameters resourceParameters)
         {
             try
