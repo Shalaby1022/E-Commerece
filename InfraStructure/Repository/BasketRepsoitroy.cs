@@ -17,7 +17,7 @@ namespace InfraStructure.Repository
         public BasketRepsoitroy(IConnectionMultiplexer connectionMultiplexer)
         {
             _dataBase = connectionMultiplexer.GetDatabase();
-        }
+        } 
         public async Task<bool> DeleteCustomerBasketAsync(string BasketId)
         {
               return await _dataBase.KeyDeleteAsync(BasketId);
@@ -34,12 +34,13 @@ namespace InfraStructure.Repository
 
         public async Task<CustomerBasket> UpdateCustomerBasketAsync(CustomerBasket customerBasket)
         {
-            var dataAddedToBasket = await _dataBase.StringSetAsync(customerBasket.Id, 
-                                                                   JsonSerializer.Serialize(customerBasket) 
+            var dataAddedToBasketOrGetUpdated = await _dataBase.StringSetAsync(customerBasket.Id,
+                                                                   JsonSerializer.Serialize(customerBasket)
                                                                    , TimeSpan.FromDays(30));
 
-            if(dataAddedToBasket == null)
+            if (dataAddedToBasketOrGetUpdated == null)
             {
+                return null;
             }
 
             return await GetCustomerBasketAsync(customerBasket.Id);

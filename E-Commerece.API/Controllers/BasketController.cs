@@ -28,10 +28,7 @@ namespace E_Commerece.API.Controllers
             try
             {
                 var basket = await _basketRepsoitory.GetCustomerBasketAsync(basketId);
-                if (basket == null)
-                {
-                    return NotFound("Can't Find Basket ssociated to YOU!");
-                }
+                
 
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
@@ -74,7 +71,7 @@ namespace E_Commerece.API.Controllers
 
         [HttpDelete("{basketId:int}")]
 
-        public async Task<IActionResult> DeleteExisitngCustomerBasket(string basketId)
+        public async Task<ActionResult> DeleteExisitngCustomerBasket(string basketId)
         {
             try
             {
